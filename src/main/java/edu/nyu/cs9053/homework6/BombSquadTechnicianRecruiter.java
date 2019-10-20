@@ -7,8 +7,10 @@ package edu.nyu.cs9053.homework6;
  */
 public class BombSquadTechnicianRecruiter {
 
+    private static final BombSquadProfessionalTechnician professional = new BombSquadProfessionalTechnician();
+
     public static BombSquadTechnician recruit() {
-        return null;
+        return professional;
     }
 
 }
