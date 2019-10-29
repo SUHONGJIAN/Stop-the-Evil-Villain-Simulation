@@ -14,6 +14,10 @@ public class BombSquadProfessionalTechnician implements BombSquadTechnician {
     private final Toolbox toolbox = new Toolbox();
 
     @Override public WireDiagram assess(Bomb bomb) {
+        if (bomb == null) {
+            throw new IllegalArgumentException("Bomb cannot be null!");
+        }
+
         return new WireDiagram() {
             @Override public TripWire getTripWires() {
                 Wire[] wires= bomb.getWires();
@@ -25,7 +29,7 @@ public class BombSquadProfessionalTechnician implements BombSquadTechnician {
                         if (toolbox.getColor(wire) == WireColor.Red) redWire = wire;
                     }
                 } catch (ToolMisuseException tme) {
-                    tme.printStackTrace();
+                    System.out.printf("Exception: ToolMisuseException!%n");
                 }
                 return new TripWire(blueWire, redWire);
             }
@@ -33,6 +37,10 @@ public class BombSquadProfessionalTechnician implements BombSquadTechnician {
     }
 
     @Override public void defuse(Bomb bomb, WireDiagram diagram) {
+        if (bomb == null || diagram == null) {
+            throw new IllegalArgumentException("Bomb or WireDiagram cannot be null!");
+        }
+
         Wire[] wires= bomb.getWires();
         Wire blueWire = diagram.getTripWires().getBlueWire();
         Wire redWire = diagram.getTripWires().getRedWire();
@@ -49,7 +57,7 @@ public class BombSquadProfessionalTechnician implements BombSquadTechnician {
             }
 
             if (villain == null) {
-                throw new NullPointerException();
+                throw new NullPointerException("Cannot find villain using callingCard!");
             }
 
             toolbox.setField(villain, "free", false);
@@ -69,7 +77,7 @@ public class BombSquadProfessionalTechnician implements BombSquadTechnician {
                 }
             }
         } catch (IllegalAccessException | NoSuchFieldException | ClassCastException | IndexOutOfBoundsException e) {
-            e.printStackTrace();
+            System.out.printf("Exception: %s%n!", e.getClass().getName());
         }
     }
 
